@@ -32,17 +32,27 @@
 </head>
 <body>
   <h1>📚 My EPUB Library</h1>
-  <ul>
-    <li>
-      <strong>Book 1</strong><br>
-      <a href="epubs/book1.epub" download>⬇️ Download</a>
-      <a href="reader.html?book=book1.epub">📖 Read Online</a>
-    </li>
-    <li>
-      <strong>Book 2</strong><br>
-      <a href="epubs/book2.epub" download>⬇️ Download</a>
-      <a href="reader.html?book=book2.epub">📖 Read Online</a>
-    </li>
-  </ul>
+  <ul id="book-list"></ul>
+
+  <script>
+    fetch("books.json")
+      .then(response => response.json())
+      .then(books => {
+        const list = document.getElementById("book-list");
+        books.forEach(book => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <strong>${book.title}</strong><br>
+            <a href="epubs/${book.file}" download>⬇️ Download</a>
+            <a href="reader.html?book=${book.file}">📖 Read Online</a>
+          `;
+          list.appendChild(li);
+        });
+      })
+      .catch(err => {
+        document.getElementById("book-list").innerHTML = "<p>⚠️ Could not load books.json</p>";
+        console.error(err);
+      });
+  </script>
 </body>
 </html>
