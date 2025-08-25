@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EPUB Reader</title>
+  <script src="js/epub.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    #viewer {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer"></div>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookName = urlParams.get("book");
+
+    if (bookName) {
+      const book = ePub("epubs/" + bookName);
+      const rendition = book.renderTo("viewer", {
+        width: "100%",
+        height: "100%"
+      });
+      rendition.display();
+    } else {
+      document.getElementById("viewer").innerHTML = "<p>No book selected.</p>";
+    }
+  </script>
+</body>
+</html>

@@ -1,8 +1,0 @@
-#ignore these in git listings
-*~
-.emacs*
-.DS_Store
-.swp
-\#*#
-.#*
-\#*
